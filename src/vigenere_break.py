@@ -28,7 +28,7 @@ def buildKeys(listOfCriticalValues):
         keys.append("".join(map(lambda x: chr((x - 4) % 26 + 65), t)))
     return keys
 
-def main(message, maxKeyLength):
+def getMaxKeys(message, maxKeyLength):
     fixedMessage = map(lambda x: ord(x) - 65, list(message))
     keys = []
     for x in range(maxKeyLength):
@@ -41,14 +41,14 @@ def main(message, maxKeyLength):
             keys.append(e)
     return keys
 
-def writeInputToFile(keys, message, fileName):
-    f = open(fileName, 'w')
+def writeInputToFile(keys, message, filename):
+    f = open(filename, 'w')
     for k in keys:
         f.write(k + '\n')
         f.write(vigenere.decode(message, k) + '\n')
         f.write('\n')
     f.close()
 
-aFile = 'output.txt'
-aMessage = "LEIDGVLFRJCYXCUFHVHUJDUDRKIDVVUOKIIFRIXDXDIRWYYNRDVQKRXFZFWAPGFQWVMQWJIRFFHFDTNEREYRRICZSLNFRNUDGJNTHIYROVWFRIUZGKBQRKBQUWIDRLNBXKZDRDNTHIYROVWFRIMAWYUFWYYDHWFQFKYPVZAZDCWAXCXBDJMNDTEFKIIGJYUEHGUDDKYEHKIRFFHFDTNEHRWTGIOYKRXAQVBGQULQGRHPIFODZZLQEIOEKVMIKZWTPRXQFFHFDTNILKBFKVJXDKYAQKIIKZWTWYYKZVLQOFUPHUNTHSLGVYYEDEXFKVWAUIYESFHPLEAEHKIRFFHFDTNERENTHGFMWVQQUVUDURHSHUCZIFODFFHOHENDLTWUUTFQVFZFZVHFBJCJWYYAXKYDSRCDRWWUUTFQVZHBXKUZGFOFSLNIHIYQTLCHDCYZWKIFKVWGUIYZWZHMQVHUJDUBDJMUQXCZREYPLIYOWZIZWYLAXXBFKVMOURGNOVLMQUNTHZHZHIJMLIYCXZPMOVHFWFNTHTODUVHFICIILEAUQKBQRGJAVZNQGZLQFKCAQ"
-writeInputToFile(main(aMessage, 6), aMessage, aFile)
+def breakCipher(message, maxLength, filename):
+    keys = getMaxKeys(message, maxLength)
+    writeInputToFile(keys, message, filename)
