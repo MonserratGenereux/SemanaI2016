@@ -12,7 +12,6 @@ def encode(message):
         fixedMessage = fixedMessage.replace(ch, '')
     fixedMessage = map(lambda x: ord(x) - 64 if x != ' ' else 0 , list(fixedMessage))
     encodedMessage = []
-    print len(fixedMessage)
     for x in range(len(fixedMessage) / 2):
         encodedMessage.append(fixedMessage[2 * x] * 27 + fixedMessage[2 * x + 1])
     return encodedMessage
@@ -26,7 +25,6 @@ def decode(encodedMessage):
 
 def cipher(message, publicKey):
     fixedMessage = encode(message)
-    print fixedMessage
     return map(lambda x: powerMod(x, publicKey[1], publicKey[0]), fixedMessage)
 
 def decipher(message, privateKey):
