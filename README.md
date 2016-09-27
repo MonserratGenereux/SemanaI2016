@@ -3,6 +3,9 @@
 _Topics covered:_
 * Caesar cipher
 * Vigenère cipher
+* RSA cipher
 
 _Challenges solved:_
-* Break Vigenère cipher
+* Break Caesar cipher (by brute force)
+* Break Vigenère cipher (by letter frequencies)
+* Break RSA cipher (by prime factors)
