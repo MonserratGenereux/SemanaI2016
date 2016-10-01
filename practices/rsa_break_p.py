@@ -1,5 +1,9 @@
+import sys
+sys.path.insert(1, '../src')
+
 import rsa
 import rsa_break
+import utilities
 
 publicKeys = [[1003, 347],
               [1007, 335],
@@ -15,9 +19,10 @@ messages = [[264, 702, 224, 329, 951],
             [525, 16, 940, 513, 816],
             [302, 187, 1013, 425, 943]]
 
-for x in range(6):
-    currentPrivateKey = [publicKeys[x][0], rsa_break.breakCipher(publicKeys[x])]
-    print "Team " + str(x + 1)
-    print "Private key: " + str(currentPrivateKey)
-    print "Message: " + str(rsa.decipher(messages[x], currentPrivateKey))
-    print
+results = []
+filename = "rsa_output.txt"
+for x in range(len(publicKeys)):
+    tempKey = [publicKeys[x][0], rsa_break.breakCipher(publicKeys[x])]
+    results.append(["Key: " + str(tempKey) + "\nMessage: " + str(messages[x]), rsa.decipher(messages[x], tempKey)])
+
+utilities.writeInputToFile(results, filename)

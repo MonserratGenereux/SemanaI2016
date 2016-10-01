@@ -1,6 +1,6 @@
 fixedChars = [',', '.', ':', ';', ' ']
 
-def encode(message, key):
+def cipher(message, key):
     fixedMessage = message.upper()
     for ch in fixedChars:
         fixedMessage = fixedMessage.replace(ch, '')
@@ -10,7 +10,7 @@ def encode(message, key):
     asciiCode = map(chr, map(lambda x: x + 65, asciiCode))
     return "".join(asciiCode)
 
-def decode(message, key):
+def decipher(message, key):
     fixedMessage = message.upper()
     for ch in fixedChars:
         fixedMessage = fixedMessage.replace(ch, '')

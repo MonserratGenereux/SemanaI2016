@@ -1,25 +1,6 @@
-import vigenere
 import itertools
-
-def splitMessage(message, n):
-    result = []
-    for x in range(n):
-        result.append([])
-    for x in range(len(message)):
-        result[x % n].append(message[x])
-    return result
-
-def getCriticalValues(valuesList):
-    elements = [0] * 26
-    for e in valuesList:
-        elements[e] += 1
-    values = [0, 0]
-    for x in range(len(elements)):
-        if elements[x] > elements[values[0]]:
-            values[0] = x
-        elif elements[x] > elements[values[1]]:
-            values[1] = x
-    return values
+import utilities
+import vigenere
 
 def buildKeys(listOfCriticalValues):
     fixedKeys = list(itertools.product(*listOfCriticalValues))
@@ -28,27 +9,15 @@ def buildKeys(listOfCriticalValues):
         keys.append("".join(map(lambda x: chr((x - 4) % 26 + 65), t)))
     return keys
 
-def getMaxKeys(message, maxKeyLength):
+def breakCipher(message, maxKeyLength, minKeyLength = 1):
     fixedMessage = map(lambda x: ord(x) - 65, list(message))
-    keys = []
-    for x in range(maxKeyLength):
-        messageLists = splitMessage(fixedMessage, x + 1)
+    results = []
+    for x in range(minKeyLength, maxKeyLength + 1):
+        messageLists = utilities.splitMessage(fixedMessage, x)
         criticalValues = []
         for y in range(len(messageLists)):
-            criticalValues.append(getCriticalValues(messageLists[y]))
+            criticalValues.append(utilities.getCriticalValues(messageLists[y]))
         tempKeys = buildKeys(criticalValues)
-        for e in tempKeys:
-            keys.append(e)
-    return keys
-
-def writeInputToFile(keys, message, filename):
-    f = open(filename, 'w')
-    for k in keys:
-        f.write(k + '\n')
-        f.write(vigenere.decode(message, k) + '\n')
-        f.write('\n')
-    f.close()
-
-def breakCipher(message, maxLength, filename):
-    keys = getMaxKeys(message, maxLength)
-    writeInputToFile(keys, message, filename)
+        for key in tempKeys:
+            results.append([key, vigenere.decipher(message, key)])
+    return results

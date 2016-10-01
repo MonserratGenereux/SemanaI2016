@@ -4,6 +4,7 @@ _Topics covered:_
 * Caesar cipher
 * Vigenère cipher
 * RSA cipher
+* Shor algorithm with quantum Fourier transform
 
 _Challenges solved:_
 * Break Caesar cipher (by brute force)

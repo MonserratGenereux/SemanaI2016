@@ -1,14 +1,8 @@
-fixedChars = [',', '.', ':', ';']
-
-def powerMod(a, p, n):
-    r = 1
-    for x in range(p):
-        r = (r * a) % n
-    return r
+import utilities
 
 def encode(message):
     fixedMessage = message.upper()
-    for ch in fixedChars:
+    for ch in utilities.fixedChars:
         fixedMessage = fixedMessage.replace(ch, '')
     fixedMessage = map(lambda x: ord(x) - 64 if x != ' ' else 0 , list(fixedMessage))
     encodedMessage = []
@@ -25,8 +19,8 @@ def decode(encodedMessage):
 
 def cipher(message, publicKey):
     fixedMessage = encode(message)
-    return map(lambda x: powerMod(x, publicKey[1], publicKey[0]), fixedMessage)
+    return map(lambda x: utilities.powerMod(x, publicKey[1], publicKey[0]), fixedMessage)
 
 def decipher(message, privateKey):
-    fixedMessage = map(lambda x: powerMod(x, privateKey[1], privateKey[0]), message)
+    fixedMessage = map(lambda x: utilities.powerMod(x, privateKey[1], privateKey[0]), message)
     return decode(fixedMessage)
